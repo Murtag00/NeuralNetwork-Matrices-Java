@@ -1,4 +1,4 @@
-# Determinants (Java)
+# Matrices (Java)
 A package of classes that empowers you to work with matrices.
 
 ## Feature-List
