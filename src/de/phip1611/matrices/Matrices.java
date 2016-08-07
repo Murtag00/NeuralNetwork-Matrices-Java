@@ -2,7 +2,7 @@ package de.phip1611.matrices;
 
 /**
  * A class with a private constructor that
- * offers basic operations on matrices similar
+ * offers basic static operations on matrices similar
  * to the class Collections
  */
 public class Matrices /*implements MatrixArithmetic*/ {
