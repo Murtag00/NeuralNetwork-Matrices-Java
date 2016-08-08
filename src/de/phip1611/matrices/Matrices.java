@@ -8,6 +8,7 @@ package de.phip1611.matrices;
 public class Matrices /*implements MatrixArithmetic*/ {
     private Matrices() {};
 
+
     /**
      * Add two matrices.
      * @param m1
