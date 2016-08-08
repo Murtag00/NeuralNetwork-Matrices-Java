@@ -28,6 +28,30 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     /**
+     * Inits a matrix with a set of values. For examle if you have a 3x3 matrix
+     * and want to have it look like
+     * {
+     *   [1,2,3]
+     *   [4,-2,6]
+     *   [1,4,0]
+     * }
+     * use .init(1, 2, 3, 4, -2, 6)
+     * @param args
+     */
+    public void init(int... args) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
+        if (args.length != this.dim.cols()*this.dim.rows()) {
+            throw new MatrixDimension.MatrixDimensionOutOfBoundsException("If you init values make sure to have rows*cols values!");
+        }
+        int index = 0;
+        for (int i = 0; i < this.dim.rows(); i++) {
+            for (int j = 0; j < this.dim.cols(); j++) {
+                this.matrix[i][j] = args[index];
+                index++;
+            }
+        }
+    }
+
+    /**
      * Returns the value at the index.
      * @param row
      * @param col

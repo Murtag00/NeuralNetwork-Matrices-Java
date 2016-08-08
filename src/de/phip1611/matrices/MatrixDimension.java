@@ -86,7 +86,7 @@ public class MatrixDimension implements Comparable<MatrixDimension> {
         return  i+j-(o.i+o.j);
     }
 
-    public class MatrixDimensionOutOfBoundsException extends ArrayIndexOutOfBoundsException {
+    public static class MatrixDimensionOutOfBoundsException extends ArrayIndexOutOfBoundsException {
         public MatrixDimensionOutOfBoundsException(String msg) {
             super(msg);
         }
