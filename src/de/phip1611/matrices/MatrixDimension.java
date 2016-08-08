@@ -1,7 +1,20 @@
 package de.phip1611.matrices;
 
+/*
+ * AUTHOR: PHILIPP SCHUSTER
+ *   Web:     https://phip1611.de
+ *   Twitter: https://twitter.com/phip1611
+ *
+ * This project on GitHub:
+ *   https://github.com/phip1611/Matrices-Java
+ *
+ * License: MIT-License
+ *   https://github.com/phip1611/Matrices-Java/blob/master/LICENSE
+ *
+ */
+
 /**
- * Represents a Matrix dimension
+ * Represents a Matrix's dimension
  */
 public class MatrixDimension implements Comparable<MatrixDimension> {
     private int i = 0; // rows count
