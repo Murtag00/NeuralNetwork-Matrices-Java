@@ -51,4 +51,24 @@ public class Vector extends Matrix {
         }
         return Math.pow(result, 0.5d);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Vector{%dx1}",this.dim.rows());
+    }
+
+    /**
+     * Compares a matrix to the current one by their dimensions.
+     *
+     * @param o
+     */
+    @Override
+    public int compareTo(Matrix o) {
+        if (this.getRowCount() != o.getRowCount()) {
+            return super.compareTo(o);
+        } else {
+            // similar vectors are compared by their length
+            return (int)(this.magnitude() - ((Vector)o).magnitude());
+        }
+    }
 }
