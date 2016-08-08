@@ -38,4 +38,17 @@ public class Vector extends Matrix {
         this.dim.check(row, 1);
         this.matrix[row-1][0] = value;
     }
+
+    /**
+     * Returns the magnitude/length of a vector.
+     * l = sqrt(x1^2 + ... +xn^2)
+     * @return
+     */
+    public double magnitude() {
+        double result = 0;
+        for (int i = 0; i < this.dim.rows(); i++) {
+            result += this.matrix[i][0]*this.matrix[i][0];
+        }
+        return Math.pow(result, 0.5d);
+    }
 }
