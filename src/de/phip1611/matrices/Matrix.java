@@ -3,7 +3,10 @@ package de.phip1611.matrices;
 import javax.naming.OperationNotSupportedException;
 import java.util.Arrays;
 
-public class Matrix implements BasicArithmetic, Comparable<Matrix> {
+/**
+ * A matrix as we know it from mathematics.
+ */
+public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     protected MatrixDimension dim;
     protected int[] [] matrix;
     public Matrix(int rows, int cols) {
@@ -30,6 +33,32 @@ public class Matrix implements BasicArithmetic, Comparable<Matrix> {
     public void set(int row, int col, int value) {
         this.dim.check(row, col);
         this.matrix[row-1][col-1] = value;
+    }
+
+    /**
+     * Returns a whole row of the matrix as an array of ints with the corresponding values.
+     * @param row
+     * @return
+     */
+    public int[] getRow(int row) {
+        this.dim.check(row, 1);
+        return this.matrix[row-1];
+    }
+
+    /**
+     * Returns a whole column of the matrix as an array of ints with the corresponding values.
+     * @param col
+     * @return
+     */
+    public int[] getCol(int col) {
+        this.dim.check(1, col);
+        int[] result = new int[this.dim.rows()];
+        int i = 0;
+        while (i < this.dim.rows()) {
+            result[i] = this.matrix[i][col];
+            i++;
+        }
+        return result;
     }
 
     /**
@@ -87,6 +116,211 @@ public class Matrix implements BasicArithmetic, Comparable<Matrix> {
                 this.matrix[i][j] %= value;
             }
         }
+    }
+
+    /**
+     * Adds a row to another one: rowDestination = rowDestination + row.
+     * For example: [1,2,3] + [4,5,6] = [1+4, 2+5, 3+6]
+     *
+     * @param row
+     * @param rowDestination
+     */
+    @Override
+    public void addRowToRow(int row, int rowDestination) {
+        this.dim.check(row, 1);
+        this.dim.check(rowDestination, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[rowDestination-1][i] += this.matrix[row-1][i];
+        }
+    }
+
+    /**
+     * Subtracts a row to another one: rowDestination = rowDestination - row.
+     * For example: [1,2,3] - [4,5,6] = [1-4, 2-5, 3-6]
+     *
+     * @param row
+     * @param rowDestination
+     */
+    @Override
+    public void subRowToRow(int row, int rowDestination) {
+        this.dim.check(row, 1);
+        this.dim.check(rowDestination, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[rowDestination-1][i] -= this.matrix[row-1][i];
+        }
+    }
+
+    /**
+     * Multiplies a row to another one: rowDestination = rowDestination * row.
+     * For example: [1,2,3] * [4,5,6] = [1*4, 2*5, 3*6]
+     *
+     * @param row
+     * @param rowDestination
+     */
+    @Override
+    public void multRowToRow(int row, int rowDestination) {
+        this.dim.check(row, 1);
+        this.dim.check(rowDestination, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[rowDestination-1][i] *= this.matrix[row-1][i];
+        }
+    }
+
+    /**
+     * Divides a row to another one: rowDestination = rowDestination / row.
+     * For example: [1,2,3] / [4,5,6] = [1/4, 2/5, 3/6]
+     *
+     * @param row
+     * @param rowDestination
+     */
+    @Override
+    public void divRowToRow(int row, int rowDestination) {
+        this.dim.check(row, 1);
+        this.dim.check(rowDestination, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[rowDestination-1][i] /= this.matrix[row-1][i];
+        }
+    }
+
+    /**
+     * Modulo a row to another one: rowDestination = rowDestination * row.
+     * For example: [1,2,3] % [4,5,6] = [1%4, 2%5, 3%6]
+     *
+     * @param row
+     * @param rowDestination
+     */
+    @Override
+    public void modRowToRow(int row, int rowDestination) {
+        this.dim.check(row, 1);
+        this.dim.check(rowDestination, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[rowDestination-1][i] %= this.matrix[row-1][i];
+        }
+    }
+
+    /**
+     * Adds a value to all elements of a row.
+     *
+     * @param row
+     * @param value
+     */
+    @Override
+    public void addToRow(int row, int value) {
+        this.dim.check(row, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[row-1][i] += value;
+        }
+    }
+
+    /**
+     * Subtracts a value to all elements of a row.
+     *
+     * @param row
+     * @param value
+     */
+    @Override
+    public void subToRow(int row, int value) {
+        this.dim.check(row, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[row-1][i] -= value;
+        }
+    }
+
+    /**
+     * Multiplies a value to all elements of a row.
+     *
+     * @param row
+     * @param value
+     */
+    @Override
+    public void multToRow(int row, int value) {
+        this.dim.check(row, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[row-1][i] *= value;
+        }
+    }
+
+    /**
+     * Divides a value to all elements of a row.
+     *
+     * @param row
+     * @param value
+     */
+    @Override
+    public void divToRow(int row, int value) {
+        this.dim.check(row, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[row-1][i] /= value;
+        }
+    }
+
+    /**
+     * Divides a value to all elements of a row.
+     *
+     * @param row
+     * @param value
+     */
+    @Override
+    public void modToRow(int row, int value) {
+        this.dim.check(row, 1);
+        for (int i = 0; i < this.dim.cols(); i++) {
+            this.matrix[row-1][i] %= value;
+        }
+    }
+
+    /**
+     * Adds a value to all elements of a column.
+     *
+     * @param col
+     * @param value
+     */
+    @Override
+    public void addToCol(int col, int value) {
+        System.err.println("NOT AVAILABLE: addToCol() isn't implemented yet");
+    }
+
+    /**
+     * Subtracts a value to all elements of a column.
+     *
+     * @param col
+     * @param value
+     */
+    @Override
+    public void subToCol(int col, int value) {
+        System.err.println("NOT AVAILABLE: subToCol() isn't implemented yet");
+    }
+
+    /**
+     * Adds a value to all elements of a column.
+     *
+     * @param col
+     * @param value
+     */
+    @Override
+    public void multToCol(int col, int value) {
+        System.err.println("NOT AVAILABLE: multToCol() isn't implemented yet");
+    }
+
+    /**
+     * Divides a value to all elements of a column.
+     *
+     * @param col
+     * @param value
+     */
+    @Override
+    public void divToCol(int col, int value) {
+        System.err.println("NOT AVAILABLE: divToCol() isn't implemented yet");
+    }
+
+    /**
+     * Modulo a value to all elements of a column.
+     *
+     * @param col
+     * @param value
+     */
+    @Override
+    public void modToCol(int col, int value) {
+        System.err.println("NOT AVAILABLE: divToCol() isn't implemented yet");
     }
 
     @Override

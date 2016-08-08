@@ -5,9 +5,8 @@ package de.phip1611.matrices;
  * offers basic static operations on matrices similar
  * to the class Collections
  */
-public class Matrices /*implements MatrixArithmetic*/ {
-    private Matrices() {};
-
+public class MatrixUtils /*implements MatrixArithmetic*/ {
+    private MatrixUtils() {};
 
     /**
      * Add two matrices.
