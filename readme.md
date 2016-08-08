@@ -7,4 +7,5 @@ A package of classes that empowers you to work with matrices.
 - add/sub/div/mult/mod whole matrices
 - determinants of matrices (for now only 2x2 and 3x3)
 - special sub classes for vectors and identity matrices
+- dot product and cross product for vectors
 - and more...
