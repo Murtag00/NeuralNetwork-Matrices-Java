@@ -35,7 +35,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      *   [4,-2,6]
      *   [1,4,0]
      * }
-     * use .init(1, 2, 3, 4, -2, 6)
+     * use .init(1, 2, 3, 4, -2, 6, 1, 4, 0)
      * @param args
      */
     public void init(int... args) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
