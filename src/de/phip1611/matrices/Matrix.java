@@ -68,7 +68,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
         int[] result = new int[this.dim.rows()];
         int i = 0;
         while (i < this.dim.rows()) {
-            result[i] = this.matrix[i][col];
+            result[i] = this.matrix[i][col-1];
             i++;
         }
         return result;
