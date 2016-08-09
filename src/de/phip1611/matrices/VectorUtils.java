@@ -17,7 +17,7 @@ import javax.naming.OperationNotSupportedException;
 
 /**
  * A class with a private constructor that
- * offers basic static operations on matrices similar
+ * offers basic static operations on vectors similar
  * to the class Collections
  */
 public class VectorUtils {

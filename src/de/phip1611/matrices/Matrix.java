@@ -39,12 +39,16 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param args
      */
     public void init(int... args) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
-        if (args.length != this.dim.cols()*this.dim.rows()) {
+        if (args.length > this.dim.cols()*this.dim.rows()) {
             throw new MatrixDimension.MatrixDimensionOutOfBoundsException("If you init values make sure to have rows*cols values!");
         }
         int index = 0;
         for (int i = 0; i < this.dim.rows(); i++) {
             for (int j = 0; j < this.dim.cols(); j++) {
+                // wenn z.b. nur drei Elemente eingegeben wurden bei einer 3x3 Matrix
+                if (index+1 > args.length) {
+                    break;
+                }
                 this.matrix[i][j] = args[index];
                 index++;
             }
