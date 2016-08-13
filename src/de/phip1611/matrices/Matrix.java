@@ -393,36 +393,69 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
         }
     }
 
+    /**
+     * Adds a value to a cell of the matrix.
+     * @param col
+     * @param row
+     * @param value
+     */
     @Override
     public void add(int col, int row, int value) {
         this.dim.check(col, row);
         this.matrix[row-1][col-1] += value;
     }
 
+    /**
+     * Subs a value to a cell of the matrix.
+     * @param col
+     * @param row
+     * @param value
+     */
     @Override
     public void sub(int col, int row, int value) {
         this.dim.check(col, row);
         this.matrix[row-1][col-1] -= value;
     }
 
+    /**
+     * Mults a value to a cell of the matrix.
+     * @param col
+     * @param row
+     * @param value
+     */
     @Override
     public void mult(int col, int row, int value) {
         this.dim.check(col, row);
         this.matrix[row-1][col-1] *= value;
     }
 
+    /**
+     * Divs a value to a cell of the matrix.
+     * @param col
+     * @param row
+     * @param value
+     */
     @Override
     public void div(int col, int row, int value) {
         this.dim.check(col, row);
         this.matrix[row-1][col-1] /= value;
     }
 
+    /**
+     * Modulo a value to a cell of the matrix.
+     * @param col
+     * @param row
+     * @param value
+     */
     @Override
     public void mod(int col, int row, int value) {
         this.dim.check(col, row);
         this.matrix[row-1][col-1] %= value;
     }
 
+    /**
+     * Prints the matrix to the console.
+     */
     public void print() {
         int i = 0;
         while (i < dim.rows()) {
@@ -431,6 +464,12 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
         }
     }
 
+    /**
+     * Checks if a matrix is invertible alias if determinant != 0
+     * @return
+     * @throws OperationNotSupportedException
+     * @throws NonQuadraticMatrixException
+     */
     public boolean isInvertable() throws OperationNotSupportedException, NonQuadraticMatrixException {
         if (det() == 0) {
             return true;
@@ -444,7 +483,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @return
      */
     public int det() throws NonQuadraticMatrixException, OperationNotSupportedException {
-        if (!isQuadraticMatrix()) throw new NonQuadraticMatrixException();
+        if (!isSquareMatrix()) throw new NonQuadraticMatrixException();
         if (dim.rows() == 0) return 0;
         if (dim.rows() == 1) return this.matrix[0][0];
         if (dim.rows() == 2) {
@@ -455,12 +494,72 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
                     -matrix[2][0]*matrix[1][1]*matrix[0][2]-matrix[2][1]*matrix[1][2]*matrix[0][0]-matrix[2][2]*matrix[1][0]*matrix[0][1];
         }
         else {
+            if (this.isTriangularMatrix()) {
+                int det = this.matrix[0][0];
+                for (int i = 1; i < this.dim.rows(); i++) {
+                    det *= this.matrix[i][i];
+                }
+            }
             throw new OperationNotSupportedException("For now you only can calc the determinant of 2x2 and 3x3 matrices!");
         }
     }
 
-    public boolean isQuadraticMatrix() {
+    /**
+     * Checks if a matrix is a mxn matrix where m=n
+     * @return
+     */
+    public boolean isSquareMatrix() {
         return dim.rows() == dim.cols();
+    }
+
+    /**
+     * Checks if a matrix is a diagonal matrix.
+     * A diagonal matrix is a triangular matrix,
+     * but not all triangular matrices
+     * are diagonal matrices.
+     * @return
+     */
+    public boolean isDiagonalMatrix() {
+        return this.isUpperTriangularMatrix() && this.isLowerTriangularMatrix();
+    }
+
+    /**
+     * Checks if a matrix is a triangular matrix.
+     * A diagonal matrix is a triangular matrix,
+     * but not all triangular matrices
+     * are diagonal matrices.
+     * @return
+     */
+    public boolean isTriangularMatrix() {
+        return this.isUpperTriangularMatrix() || this.isLowerTriangularMatrix();
+    }
+
+    /**
+     * Checks if a matrix is a upper triangular matrix.
+     * @return
+     */
+    public boolean isUpperTriangularMatrix() {
+        if (!this.isSquareMatrix()) return false;
+        for (int i = 0; i < this.dim.rows(); i++) {
+            for (int j = i+1; j < this.dim.cols(); j++) {
+                if (this.matrix[i][j] != 0) return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if a matrix is a upper triangular matrix.
+     * @return
+     */
+    public boolean isLowerTriangularMatrix() {
+        if (!this.isSquareMatrix()) return false;
+        for (int i = 0; i < this.dim.rows(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (this.matrix[i][j] != 0) return false;
+            }
+        }
+        return true;
     }
 
     /**
