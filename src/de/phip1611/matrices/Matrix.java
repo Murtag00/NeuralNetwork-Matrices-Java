@@ -22,6 +22,20 @@ import java.util.Arrays;
 public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     protected MatrixDimension dim;
     protected int[] [] matrix;
+    public Matrix(String dimension) {
+        if (dimension.matches("([0-9])+([x])([0-9])+")) {
+            int rows, cols;
+            String[] split = dimension.split("x");
+            rows = Integer.valueOf(split[0]);
+            cols = Integer.valueOf(split[1]);
+
+            this.dim = new MatrixDimension(rows, cols);
+            this.matrix = new int[dim.rows()][dim.cols()];
+        } else {
+            throw new IllegalArgumentException("Dimension-String has to match" +
+                    " with \"([0-9])+([x])([0-9])+\", for example 3x2, 0x0, 20x7");
+        }
+    }
     public Matrix(int rows, int cols) {
         this.dim = new MatrixDimension(rows, cols);
         this.matrix = new int[dim.rows()][dim.cols()];
