@@ -411,14 +411,17 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
 
     /**
      * Calculates the determinant of a matrix.
+     * (For now only 0x0 up to 3x3 matrices)
      * @return
      */
     public int det() throws NonQuadraticMatrixException, OperationNotSupportedException {
         if (!isQuadraticMatrix()) throw new NonQuadraticMatrixException();
+        if (dim.rows() == 0) return 0;
+        if (dim.rows() == 1) return this.matrix[0][0];
         if (dim.rows() == 2) {
             return matrix[0][0]*matrix[1][1]-matrix[1][0]*matrix[0][1];
         }
-        else if (dim.rows() == 3) {
+        if (dim.rows() == 3) {
             return matrix[0][0]*matrix[1][1]*matrix[2][2]+matrix[0][1]*matrix[1][2]*matrix[2][0]+matrix[0][2]*matrix[1][0]*matrix[2][1]
                     -matrix[2][0]*matrix[1][1]*matrix[0][2]-matrix[2][1]*matrix[1][2]*matrix[0][0]-matrix[2][2]*matrix[1][0]*matrix[0][1];
         }
