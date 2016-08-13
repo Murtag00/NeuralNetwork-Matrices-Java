@@ -331,7 +331,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void addToCol(int col, int value) {
-        System.err.println("NOT AVAILABLE: addToCol() isn't implemented yet");
+        this.dim.check(this.dim.rows(),col);
+        for (int i = 0; i < this.dim.rows(); i++) {
+            this.matrix[i][col-1] += value;
+        }
     }
 
     /**
@@ -342,7 +345,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void subToCol(int col, int value) {
-        System.err.println("NOT AVAILABLE: subToCol() isn't implemented yet");
+        this.dim.check(this.dim.rows(),col);
+        for (int i = 0; i < this.dim.rows(); i++) {
+            this.matrix[i][col-1] -= value;
+        }
     }
 
     /**
@@ -353,7 +359,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void multToCol(int col, int value) {
-        System.err.println("NOT AVAILABLE: multToCol() isn't implemented yet");
+        this.dim.check(this.dim.rows(),col);
+        for (int i = 0; i < this.dim.rows(); i++) {
+            this.matrix[i][col-1] *= value;
+        }
     }
 
     /**
@@ -364,7 +373,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void divToCol(int col, int value) {
-        System.err.println("NOT AVAILABLE: divToCol() isn't implemented yet");
+        this.dim.check(this.dim.rows(),col);
+        for (int i = 0; i < this.dim.rows(); i++) {
+            this.matrix[i][col-1] /= value;
+        }
     }
 
     /**
@@ -375,7 +387,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void modToCol(int col, int value) {
-        System.err.println("NOT AVAILABLE: divToCol() isn't implemented yet");
+        this.dim.check(this.dim.rows(),col);
+        for (int i = 0; i < this.dim.rows(); i++) {
+            this.matrix[i][col-1] %= value;
+        }
     }
 
     @Override
