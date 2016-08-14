@@ -499,8 +499,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
                 for (int i = 1; i < this.dim.rows(); i++) {
                     det *= this.matrix[i][i];
                 }
+                return det;
+            } else {
+                throw new OperationNotSupportedException("For now you only can calc the determinant of 2x2 and 3x3 matrices!");
             }
-            throw new OperationNotSupportedException("For now you only can calc the determinant of 2x2 and 3x3 matrices!");
         }
     }
 
