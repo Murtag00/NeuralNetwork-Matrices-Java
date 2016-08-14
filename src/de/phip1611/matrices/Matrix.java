@@ -479,7 +479,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
 
     /**
      * Calculates the determinant of a matrix.
-     * (For now only 0x0 up to 3x3 matrices)
+     * (For now only 0x0 up to 3x3 matrices and any triangular matrix)
      * @return
      */
     public int det() throws NonQuadraticMatrixException, OperationNotSupportedException {
