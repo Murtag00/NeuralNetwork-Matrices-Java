@@ -34,15 +34,16 @@ public class MatrixUtils /*implements MatrixArithmetic*/ {
         if (m1.getColCount() == m2.getColCount()
                 && m1.getRowCount() == m2.getRowCount()) {
             Matrix result = new Matrix(m1.getRowCount(), m1.getColCount());
-            for (int i = 0; i < result.getRowCount(); i++) {
-                for (int j = 0; j < result.getColCount(); j++) {
+            for (int i = 1; i <= result.getRowCount(); i++) {
+                for (int j = 1; j <= result.getColCount(); j++) {
                     result.set(i,j, m1.get(i, j) + m2.get(i, j));
                 }
             }
+            return result;
         } else {
             throw new InvalidMatrixDimensionxException("If you want to add two matrices make sure both have the same dimension!");
         }
-        return null;
+        //return null;
     }
 
     /**
@@ -58,15 +59,16 @@ public class MatrixUtils /*implements MatrixArithmetic*/ {
         if (m1.getColCount() == m2.getColCount()
                 && m1.getRowCount() == m2.getRowCount()) {
             Matrix result = new Matrix(m1.getRowCount(), m1.getColCount());
-            for (int i = 0; i < result.getRowCount(); i++) {
-                for (int j = 0; j < result.getColCount(); j++) {
+            for (int i = 1; i <= result.getRowCount(); i++) {
+                for (int j = 1; j <= result.getColCount(); j++) {
                     result.set(i,j, m1.get(i, j) - m2.get(i, j));
                 }
             }
+            return result;
         } else {
             throw new InvalidMatrixDimensionxException("If you want to substract two matrices make sure both have the same dimension!");
         }
-        return null;
+        //return null;
     }
 
     /**
@@ -82,15 +84,16 @@ public class MatrixUtils /*implements MatrixArithmetic*/ {
         if (m1.getColCount() == m2.getColCount()
                 && m1.getRowCount() == m2.getRowCount()) {
             Matrix result = new Matrix(m1.getRowCount(), m1.getColCount());
-            for (int i = 0; i < result.getRowCount(); i++) {
-                for (int j = 0; j < result.getColCount(); j++) {
+            for (int i = 1; i <= result.getRowCount(); i++) {
+                for (int j = 1; j <= result.getColCount(); j++) {
                     result.set(i,j, m1.get(i, j) % m2.get(i, j));
                 }
             }
+            return result;
         } else {
             throw new InvalidMatrixDimensionxException("If you want to substract two matrices make sure both have the same dimension!");
         }
-        return null;
+        //return null;
     }
 
 
@@ -102,7 +105,7 @@ public class MatrixUtils /*implements MatrixArithmetic*/ {
      */
     public static Matrix mult(Matrix m1, Matrix m2) {
         if (m1 == null || m2 == null) {
-            throw new NullPointerException("Matrix is null");
+            throw new NullPointerException("At least one matrix is null");
         }
         if (m1.getColCount() != m2.getRowCount()) {
             throw new InvalidMatrixDimensionxException("Multiplying two matrices is only allowed/possible if m1.cols == m2.rows");
