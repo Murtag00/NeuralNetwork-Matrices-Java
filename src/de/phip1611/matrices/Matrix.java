@@ -471,7 +471,8 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @throws NonQuadraticMatrixException
      */
     public boolean isInvertable() throws OperationNotSupportedException, NonQuadraticMatrixException {
-        if (det() == 0) {
+        if (!this.isSquareMatrix()) return false;
+        if (this.det() == 0) {
             return true;
         }
         return false;
