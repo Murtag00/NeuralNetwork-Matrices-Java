@@ -1,6 +1,5 @@
 package de.phip1611.math.matrices;
 
-import de.phip1611.math.matrices.Matrix;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
