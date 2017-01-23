@@ -1,4 +1,4 @@
-package de.phip1611.matrices;
+package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER

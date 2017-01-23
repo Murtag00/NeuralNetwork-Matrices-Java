@@ -1,4 +1,4 @@
-package de.phip1611.matrices;
+package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
@@ -13,7 +13,6 @@ package de.phip1611.matrices;
  *
  */
 
-import javax.naming.OperationNotSupportedException;
 import java.util.Arrays;
 
 /**
@@ -467,10 +466,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     /**
      * Checks if a matrix is invertible alias if determinant != 0
      * @return
-     * @throws OperationNotSupportedException
      * @throws NonQuadraticMatrixException
      */
-    public boolean isInvertable() throws OperationNotSupportedException, NonQuadraticMatrixException {
+    public boolean isInvertable() throws IllegalArgumentException, NonQuadraticMatrixException {
         if (!this.isSquareMatrix()) return false;
         if (this.det() != 0) {
             return true;
@@ -483,7 +481,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * (For now only 0x0 up to 3x3 matrices and any triangular matrix)
      * @return
      */
-    public int det() throws NonQuadraticMatrixException, OperationNotSupportedException {
+    public int det() throws NonQuadraticMatrixException {
         if (!isSquareMatrix()) throw new NonQuadraticMatrixException();
         if (dim.rows() == 0) return 0;
         if (dim.rows() == 1) return this.matrix[0][0];
@@ -502,7 +500,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
                 }
                 return det;
             } else {
-                throw new OperationNotSupportedException("For now you only can calc the determinant of 2x2 and 3x3 matrices!");
+                throw new IllegalArgumentException("For now you only can calc the determinant of 2x2 and 3x3 matrices!");
             }
         }
     }

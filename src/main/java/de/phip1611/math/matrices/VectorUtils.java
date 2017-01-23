@@ -1,4 +1,4 @@
-package de.phip1611.matrices;
+package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
@@ -13,7 +13,6 @@ package de.phip1611.matrices;
  *
  */
 
-import javax.naming.OperationNotSupportedException;
 
 /**
  * A class with a private constructor that
@@ -42,7 +41,7 @@ public class VectorUtils {
      * @param v2
      * @return
      */
-    public static Vector crossProduct(Vector v1, Vector v2) throws OperationNotSupportedException {
+    public static Vector crossProduct(Vector v1, Vector v2) {
         if (v1.getRowCount() == 3 && 3 == v2.getRowCount()) {
             Vector product = new Vector(3);
             int x1, x2, x3;
@@ -52,7 +51,7 @@ public class VectorUtils {
             product.init(x1,x2,x3);
             return product;
         } else {
-            throw new OperationNotSupportedException("Cross product only works for 3x1 vectors");
+            throw new IllegalArgumentException("Cross product only works for 3x1 vectors");
         }
     }
 
