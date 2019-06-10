@@ -19,10 +19,7 @@ import java.util.Arrays;
 /**
  * <h1> With the help of the book: 978-3960090434 ISBN-13</h1>	
  * @author Justin Horn <br><br>
- * 
 
-*
- * 
  * 
  * NeuronalNetwork that uses {@link Matrix} and {@link Vector} for matrix calculations.<br>
  *	By now it can only learn by Backpropagation of error.<br>
@@ -69,7 +66,7 @@ public class NeuralNetwork {
 	public NeuralNetwork(String path) {
 		try {
 			id = count++;
-			readFromFile(path);
+			initalizeNet_by_StringBuilder(readFromFile_to_StringBuilder(path));
 		} catch (Exception e) {
 			count--;
 			System.out.println("Error: "+path);
@@ -111,9 +108,6 @@ public class NeuralNetwork {
 			 weights[invs-1] = MatrixUtils.add(weights[invs-1],change);
 			 invs--;
 		 }
-		 
-		 
-		 
 	}
 	
 	/**
@@ -144,13 +138,8 @@ public class NeuralNetwork {
 	 * @see #calc(Vector) calc(Vector) returns all activations
 	 */
 	public Vector calcLast(Vector inputs) {
-		Vector[] v = new Vector[weights.length+1];
-		v[0] = inputs;
-		for(int i = 0;  i< weights.length;i++) {
-			v[i+1] = (Vector) MatrixUtils.mult(weights[i], v[i]);
-			v[i+1].sigmoid();
-		}
-		return v[weights.length];
+		Vector[] v = calc(inputs);
+		return v[v.length-1];
 	}
 	
 	/**
@@ -170,7 +159,14 @@ public class NeuralNetwork {
 	 * <h1> uses: {@link Matrix#toFile()}</h1>
 	 * @return NeuralNet in discriped coding
 	 */
-	public String toFile() {
+	public String codeNN_to_String() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(codeLayers_to_StringBuilder());
+		builder.append(codeMatrices_to_StringBuilder());
+		return builder.toString();
+	}
+	
+	private StringBuilder codeLayers_to_StringBuilder() {
 		StringBuilder a = new StringBuilder();
 		a.append("L:"+layers.length+"-");
 		for(int i = 0; i <layers.length;i++) {
@@ -180,15 +176,20 @@ public class NeuralNetwork {
 				a.append(layers[i]);
 			}
 		}
-		a.append("M:");
+		return a;
+	}
+	
+	private StringBuilder codeMatrices_to_StringBuilder() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("M:");
 		for(int i = 0; i <weights.length;i++) {
 			if(i < weights.length-1) { // damit man es leichter splitten kann
-				a.append(weights[i].toFile()+"--");
+				builder.append(weights[i].toFile()+"--");
 			} else {
-				a.append(weights[i].toFile());
+				builder.append(weights[i].toFile());
 			}
 		}
-		return a.toString();
+		return builder;
 	}
 	
 	/**
@@ -205,7 +206,7 @@ public class NeuralNetwork {
 				f.createNewFile();
 			}
 			FileWriter out = new FileWriter(f);
-			out.write(toFile());
+			out.write(codeNN_to_String());
 			out.flush();
 			out.close();
 		} catch (Exception e) {
@@ -215,12 +216,12 @@ public class NeuralNetwork {
 	
 	/**
 	 * Reads net previously coded by {@link #toFile()}. <br>
-	 * Initializes net. <br>
 	 * <h1> used by {@link #NeuralNetwork(String)} </h1>
 	 * @param pathName = path+name to file
+	 * @return StringBuilder a with net in an encoded way
 	 * @throws Exception in case of pathName does not exist or reading problems.
 	 */
-	public void readFromFile(String pathName) throws Exception {
+	public StringBuilder readFromFile_to_StringBuilder(String pathName) throws Exception {
 		File f = new File(pathName);
 		if(!(f.exists())) {
 			throw new IllegalArgumentException("NN"+id+": Datei: "+pathName+" existiert nicht");
@@ -229,35 +230,51 @@ public class NeuralNetwork {
 			StringBuilder a = new StringBuilder();
 			a.append(in.readLine());
 			in.close();
-			
-			String l = a.substring(0,a.indexOf("M:"));
-			int index = l.indexOf("L:")+2;
-			int layersLength = Integer.parseInt(l.substring(index,l.indexOf("-",index)));
-			this.layers = new int[layersLength];
-			index = l.indexOf("-",index)+1;
-			String[] lengths = l.substring(index).split("-");
-			
-			for(int i = 0; i < layersLength;i++) {
-				layers[i] = Integer.parseInt(lengths[i]);
-			}
-		
-			a.delete(0, a.indexOf("M:")+2);
-			String[] gewichtMatrizen = a.toString().split("--");
-			int len1 = gewichtMatrizen.length;
-			weights = new Matrix[len1];
-			for(int i = 0; i < len1;i++ ) {
-				String[] gew = gewichtMatrizen[i].split("\\s");
-				int len2 = gew.length;
-				double[] values = new double[len2];
-				for(int j = 0; j < len2;j++ ) {
-					values[j] = Double.parseDouble(gew[j]);
-				}
-				Matrix m = new Matrix(layers[i+1],layers[i]);
-				m.init(values);
-				weights[i] = m;
-			}
-			
+			return a;
 		}		
+	}
+	
+	private void initalizeNet_by_StringBuilder(StringBuilder codedNet) {
+		layers = encode_to_Layers(codedNet);
+		weights = encode_to_Matrices(codedNet);
+	}
+	
+	private int[] encode_to_Layers(StringBuilder codedNet) {
+		String l = codedNet.substring(0,codedNet.indexOf("M:"));
+		int index = l.indexOf("L:")+2;
+		int layersLength = Integer.parseInt(l.substring(index,l.indexOf("-",index)));
+		int[] layers = new int[layersLength];
+		index = l.indexOf("-",index)+1;
+		String[] lengths = l.substring(index).split("-");
+		
+		for(int i = 0; i < layersLength;i++) {
+			layers[i] = Integer.parseInt(lengths[i]);
+		}
+		return layers;
+	}
+	
+	private Matrix[] encode_to_Matrices(StringBuilder codedNet) {
+		StringBuffer codedMatrices = new StringBuffer(codedNet.substring(codedNet.indexOf("M:")+2));		
+		String[] matrices = codedMatrices.toString().split("--");
+		int count = matrices.length;
+		Matrix[] weights = new Matrix[count];
+		for(int i = 0; i < count;i++ ) {
+			MatrixDimension mD = new MatrixDimension(layers[i+1],layers[i]);
+			weights[i] = initalizeMatrix_by_codedString(matrices[i],mD);
+		}
+		return weights;
+	}
+	
+	private Matrix initalizeMatrix_by_codedString(String codedMatrix,MatrixDimension dim) {
+		String[] gew = codedMatrix.split("\\s");
+		int len2 = gew.length;
+		double[] values = new double[len2];
+		for(int j = 0; j < len2;j++ ) {
+			values[j] = Double.parseDouble(gew[j]);
+		}
+		Matrix m = new Matrix(dim.rows(),dim.cols());
+		m.init(values);
+		return m;
 	}
 	
 }
