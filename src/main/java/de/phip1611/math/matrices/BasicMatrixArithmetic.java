@@ -1,3 +1,5 @@
+package main.java.de.phip1611.math.matrices;
+
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
