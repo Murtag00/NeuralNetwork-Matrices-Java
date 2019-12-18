@@ -1,4 +1,3 @@
-package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
@@ -30,133 +29,133 @@ public class IdentityMatrix extends Matrix {
      * No effect for Identity matrices
      */
     @Override
-    public void add(int col, int row, int value) {}
+    public void add(int col, int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void sub(int col, int row, int value) {}
+    public void sub(int col, int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void mult(int col, int row, int value) {}
+    public void mult(int col, int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void div(int col, int row, int value) {}
+    public void div(int col, int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void mod(int col, int row, int value) {}
+    public void mod(int col, int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void addAll(int value) {}
+    public void addAll(double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void subAll(int value) {}
+    public void subAll(double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void multAll(int value) {}
+    public void multAll(double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void divAll(int value) {}
+    public void divAll(double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void modAll(int value) {}
+    public void modAll(double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void addToRow(int row, int value) {}
+    public void addToRow(int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void subToRow(int row, int value) {}
+    public void subToRow(int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void multToRow(int row, int value) {}
+    public void multToRow(int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void divToRow(int row, int value) {}
+    public void divToRow(int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void modToRow(int row, int value) {}
+    public void modToRow(int row, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void addToCol(int col, int value) {}
+    public void addToCol(int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void subToCol(int col, int value) {}
+    public void subToCol(int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void multToCol(int col, int value) {}
+    public void multToCol(int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void divToCol(int col, int value) {}
+    public void divToCol(int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void modToCol(int col, int value) {}
+    public void modToCol(int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void set(int row, int col, int value) {}
+    public void set(int row, int col, double value) {}
 
     /**
      * No effect for Identity matrices
      */
     @Override
-    public void setAll(int value) {}
+    public void setAll(double value) {}
 
     /**
      * No effect for Identity matrices
@@ -168,5 +167,5 @@ public class IdentityMatrix extends Matrix {
      * No effect for Identity matrices
      */
     @Override
-    public void init(int... args) {}
+    public void init(double... args) {}
 }

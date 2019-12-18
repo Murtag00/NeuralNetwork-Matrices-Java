@@ -1,4 +1,3 @@
-package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
@@ -11,6 +10,15 @@ package de.phip1611.math.matrices;
  * License: MIT-License
  *   https://github.com/phip1611/Matrices-Java/blob/master/LICENSE
  *
+ *
+ * 	Edited By Justin Horn
+ * 	Email:
+ *  ju-horn@web.de
+ *  Web:
+ *  https://justinhorn.name/
+ *  GiHub:
+ *  https://github.com/Murtag00/Matrices_with_simple_Neuralnet
+ *  
  */
 
 /**
@@ -21,31 +29,31 @@ public interface BasicMatrixArithmetic {
      * Adds a value to all elements of the matrix.
      * @param value
      */
-    void addAll(int value);
+    void addAll(double value);
 
     /**
      * Subtracts all elements of the matrix by the value.
      * @param value
      */
-    void subAll(int value);
+    void subAll(double value);
 
     /**
      * Multiply all elements of the matrix by the value.
      * @param value
      */
-    void multAll(int value);
+    void multAll(double value);
 
     /**
      * Divides all elements of the matrix by the value.
      * @param value
      */
-    void divAll(int value);
+    void divAll(double value);
 
     /**
      * Modulo all elements of the matrix by the value.
      * @param value
      */
-    void modAll(int value);
+    void modAll(double value);
 
     /**
      * Adds a row to another one: rowDestination = rowDestination + row.
@@ -92,70 +100,70 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void addToRow(int row, int value);
+    void addToRow(int row, double value);
 
     /**
      * Subtracts a value to all elements of a row.
      * @param row
      * @param value
      */
-    void subToRow(int row, int value);
+    void subToRow(int row, double value);
 
     /**
      * Multiplies a value to all elements of a row.
      * @param row
      * @param value
      */
-    void multToRow(int row, int value);
+    void multToRow(int row, double value);
 
     /**
      * Divides a value to all elements of a row.
      * @param row
      * @param value
      */
-    void divToRow(int row, int value);
+    void divToRow(int row, double value);
 
     /**
      * Divides a value to all elements of a row.
      * @param row
      * @param value
      */
-    void modToRow(int row, int value);
+    void modToRow(int row, double value);
 
     /**
      * Adds a value to all elements of a column.
      * @param col
      * @param value
      */
-    void addToCol(int col, int value);
+    void addToCol(int col, double value);
 
     /**
      * Subtracts a value to all elements of a column.
      * @param col
      * @param value
      */
-    void subToCol(int col, int value);
+    void subToCol(int col, double value);
 
     /**
      * Adds a value to all elements of a column.
      * @param col
      * @param value
      */
-    void multToCol(int col, int value);
+    void multToCol(int col, double value);
 
     /**
      * Divides a value to all elements of a column.
      * @param col
      * @param value
      */
-    void divToCol(int col, int value);
+    void divToCol(int col, double value);
 
     /**
      * Modulo a value to all elements of a column.
      * @param col
      * @param value
      */
-    void modToCol(int col, int value);
+    void modToCol(int col, double value);
 
     /**
      * Adds a value to a cell of the matrix.
@@ -163,7 +171,7 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void add(int col, int row, int value);
+    void add(int col, int row, double value);
 
     /**
      * Subtracts a value to a cell of the matrix.
@@ -171,7 +179,7 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void sub(int col, int row, int value);
+    void sub(int col, int row, double value);
 
     /**
      * Multiplies a value to a cell of the matrix.
@@ -179,7 +187,7 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void mult(int col, int row, int value);
+    void mult(int col, int row, double value);
 
     /**
      * Divides a value to a cell of the matrix.
@@ -187,7 +195,7 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void div(int col, int row, int value);
+    void div(int col, int row, double value);
 
     /**
      * Modulo a value to a cell of the matrix.
@@ -195,5 +203,5 @@ public interface BasicMatrixArithmetic {
      * @param row
      * @param value
      */
-    void mod(int col, int row, int value);
+    void mod(int col, int row, double value);
 }

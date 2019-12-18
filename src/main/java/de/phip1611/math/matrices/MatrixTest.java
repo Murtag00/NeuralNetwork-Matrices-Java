@@ -1,4 +1,3 @@
-package de.phip1611.math.matrices;
 
 public class MatrixTest {
     /*

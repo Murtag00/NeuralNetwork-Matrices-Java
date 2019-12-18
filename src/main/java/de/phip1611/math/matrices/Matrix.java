@@ -1,43 +1,69 @@
-package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
  *   Web:     https://phip1611.de
  *   Twitter: https://twitter.com/phip1611
  *
- * This project on GitHub:
+ * other project version on GitHub:
  *   https://github.com/phip1611/Matrices-Java
  *
  * License: MIT-License
  *   https://github.com/phip1611/Matrices-Java/blob/master/LICENSE
  *
+ * 	Edited by Justin Horn 14.05.2019
+ * 
+ * 	Edited By Justin Horn
+ * 	Email:
+ *  ju-horn@web.de
+ *  Web:
+ *  https://justinhorn.name/
+ *  this version on GitHub:
+ *  https://github.com/Murtag00/Matrices_with_simple_Neuralnet
+ *  
+ *  int Arrays -> double
+ *  Matrixs .get starts with 0,0 instead of 1,1
+ *  
  */
 
 import java.util.Arrays;
 
 /**
- * A matrix as we know it from mathematics.
+ * A matrix as we know it from mathematics as informatics.
  */
 public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     protected MatrixDimension dim;
-    protected int[] [] matrix;
+    protected double[] [] matrix;
     public Matrix(String dimension) {
         if (dimension.matches("([0-9])+([x])([0-9])+")) {
             int rows, cols;
             String[] split = dimension.split("x");
-            rows = Integer.valueOf(split[0]);
-            cols = Integer.valueOf(split[1]);
+            rows = Integer.parseInt(split[0]); // value of not needed
+            cols = Integer.parseInt(split[1]);
 
             this.dim = new MatrixDimension(rows, cols);
-            this.matrix = new int[dim.rows()][dim.cols()];
+            this.matrix = new double[dim.rows()][dim.cols()];
         } else {
             throw new IllegalArgumentException("Dimension-String has to match" +
                     " with \"([0-9])+([x])([0-9])+\", for example 3x2, 0x0, 20x7");
         }
     }
+    
     public Matrix(int rows, int cols) {
         this.dim = new MatrixDimension(rows, cols);
-        this.matrix = new int[dim.rows()][dim.cols()];
+        this.matrix = new double[dim.rows()][dim.cols()];
+    }
+    /**
+     * clones Matrix 
+     * @return this Matrix as a clone
+     */
+    public Matrix clone() {
+    	Matrix m = new Matrix(dim.rows(),dim.cols());
+    	for(int i = 0; i < dim.rows();i++) {
+    		for(int j = 0; j < dim.cols(); j++) {
+    			m.matrix[i][j] = matrix[i][j];
+    		}
+    	}
+		return m;
     }
 
     /**
@@ -51,7 +77,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * use .init(1, 2, 3, 4, -2, 6, 1, 4, 0)
      * @param args
      */
-    public void init(int... args) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
+    public void init(double... args) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
         if (args.length > this.dim.cols()*this.dim.rows()) {
             throw new MatrixDimension.MatrixDimensionOutOfBoundsException("If you init values make sure to have rows*cols values!");
         }
@@ -60,10 +86,28 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
             for (int j = 0; j < this.dim.cols(); j++) {
                 // wenn z.b. nur drei Elemente eingegeben wurden bei einer 3x3 Matrix
                 if (index+1 > args.length) {
+                	//System.out.println("args.length:" +  args.length);
                     break;
                 }
                 this.matrix[i][j] = args[index];
                 index++;
+            }
+        }
+    }
+    
+
+    
+    
+    /**
+     *´fills the Matrix with a numbers of a random intervall
+     *  matrix[i][j] = Math.random()*multiplyer+modifier
+     */
+    public void randomInit(double multiplyer, double modifier) throws MatrixDimension.MatrixDimensionOutOfBoundsException {
+        int index = 0;
+        for (int i = 0; i < this.dim.rows(); i++) {
+            for (int j = 0; j < this.dim.cols(); j++) {
+              
+                this.matrix[i][j] = Math.random()*multiplyer+modifier;
             }
         }
     }
@@ -73,9 +117,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param row
      * @param col
      */
-    public int get(int row, int col) {
+    public double get(int row, int col) {
         this.dim.check(row, col);
-        return this.matrix[row-1][col-1];
+        return this.matrix[row][col];
     }
 
     /**
@@ -84,9 +128,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param col
      * @param value
      */
-    public void set(int row, int col, int value) {
+    public void set(int row, int col, double value) {
         this.dim.check(row, col);
-        this.matrix[row-1][col-1] = value;
+        this.matrix[row][col] = value;
     }
 
     /**
@@ -94,9 +138,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param row
      * @return
      */
-    public int[] getRow(int row) {
-        this.dim.check(row, 1);
-        return this.matrix[row-1];
+    public double[] getRow(int row) {
+        this.dim.check(row, 0);
+        return this.matrix[row];
     }
 
     /**
@@ -104,22 +148,39 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param col
      * @return
      */
-    public int[] getCol(int col) {
-        this.dim.check(1, col);
-        int[] result = new int[this.dim.rows()];
+    public double[] getCol(int col) {
+        this.dim.check(0, col);
+        double[] result = new double[this.dim.rows()];
         int i = 0;
         while (i < this.dim.rows()) {
-            result[i] = this.matrix[i][col-1];
+            result[i] = this.matrix[i][col];
             i++;
         }
         return result;
     }
-
+    
     /**
      * Set's all fields of the matrix to the value.
      * @param value
      */
-    public void setAll(int value) {
+    public void sigmoid() {
+        for (int i = 0; i < dim.rows(); i++) {
+            for (int j = 0; j < dim.cols(); j++) {
+                this.matrix[i][j] = sigmoid(matrix[i][j]);
+            }
+        }
+    }
+    
+    public static double sigmoid(double x)
+    {
+        return 1 / (1 + Math.exp(-x));
+    }
+    
+    /**
+     * Set's all fields of the matrix to the value.
+     * @param value
+     */
+    public void setAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] = value;
@@ -128,7 +189,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     @Override
-    public void addAll(int value) {
+    public void addAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] += value;
@@ -137,7 +198,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     @Override
-    public void subAll(int value) {
+    public void subAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] -= value;
@@ -146,7 +207,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     @Override
-    public void multAll(int value) {
+    public void multAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] *= value;
@@ -155,7 +216,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     @Override
-    public void divAll(int value) {
+    public void divAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] /= value;
@@ -164,7 +225,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
     }
 
     @Override
-    public void modAll(int value) {
+    public void modAll(double value) {
         for (int i = 0; i < dim.rows(); i++) {
             for (int j = 0; j < dim.cols(); j++) {
                 this.matrix[i][j] %= value;
@@ -181,8 +242,8 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void addRowToRow(int row, int rowDestination) {
-        this.dim.check(row, 1);
-        this.dim.check(rowDestination, 1);
+        this.dim.check(row, 0);
+        this.dim.check(rowDestination, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
             this.matrix[rowDestination-1][i] += this.matrix[row-1][i];
         }
@@ -197,10 +258,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void subRowToRow(int row, int rowDestination) {
-        this.dim.check(row, 1);
-        this.dim.check(rowDestination, 1);
+        this.dim.check(row, 0);
+        this.dim.check(rowDestination, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[rowDestination-1][i] -= this.matrix[row-1][i];
+            this.matrix[rowDestination][i] -= this.matrix[row][i];
         }
     }
 
@@ -213,10 +274,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void multRowToRow(int row, int rowDestination) {
-        this.dim.check(row, 1);
-        this.dim.check(rowDestination, 1);
+        this.dim.check(row, 0);
+        this.dim.check(rowDestination, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[rowDestination-1][i] *= this.matrix[row-1][i];
+            this.matrix[rowDestination][i] *= this.matrix[row][i];
         }
     }
 
@@ -229,10 +290,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void divRowToRow(int row, int rowDestination) {
-        this.dim.check(row, 1);
-        this.dim.check(rowDestination, 1);
+        this.dim.check(row, 0);
+        this.dim.check(rowDestination, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[rowDestination-1][i] /= this.matrix[row-1][i];
+            this.matrix[rowDestination][i] /= this.matrix[row][i];
         }
     }
 
@@ -245,10 +306,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      */
     @Override
     public void modRowToRow(int row, int rowDestination) {
-        this.dim.check(row, 1);
-        this.dim.check(rowDestination, 1);
+        this.dim.check(row, 0);
+        this.dim.check(rowDestination, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[rowDestination-1][i] %= this.matrix[row-1][i];
+            this.matrix[rowDestination][i] %= this.matrix[row][i];
         }
     }
 
@@ -259,10 +320,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void addToRow(int row, int value) {
-        this.dim.check(row, 1);
+    public void addToRow(int row, double value) {
+        this.dim.check(row, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[row-1][i] += value;
+            this.matrix[row][i] += value;
         }
     }
 
@@ -273,10 +334,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void subToRow(int row, int value) {
-        this.dim.check(row, 1);
+    public void subToRow(int row, double value) {
+        this.dim.check(row, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[row-1][i] -= value;
+            this.matrix[row][i] -= value;
         }
     }
 
@@ -287,10 +348,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void multToRow(int row, int value) {
-        this.dim.check(row, 1);
+    public void multToRow(int row, double value) {
+        this.dim.check(row, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[row-1][i] *= value;
+            this.matrix[row][i] *= value;
         }
     }
 
@@ -301,10 +362,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void divToRow(int row, int value) {
-        this.dim.check(row, 1);
+    public void divToRow(int row, double value) {
+        this.dim.check(row, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[row-1][i] /= value;
+            this.matrix[row][i] /= value;
         }
     }
 
@@ -315,10 +376,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void modToRow(int row, int value) {
-        this.dim.check(row, 1);
+    public void modToRow(int row, double value) {
+        this.dim.check(row, 0);
         for (int i = 0; i < this.dim.cols(); i++) {
-            this.matrix[row-1][i] %= value;
+            this.matrix[row][i] %= value;
         }
     }
 
@@ -329,10 +390,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void addToCol(int col, int value) {
+    public void addToCol(int col, double value) {
         this.dim.check(this.dim.rows(),col);
         for (int i = 0; i < this.dim.rows(); i++) {
-            this.matrix[i][col-1] += value;
+            this.matrix[i][col] += value;
         }
     }
 
@@ -343,10 +404,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void subToCol(int col, int value) {
+    public void subToCol(int col, double value) {
         this.dim.check(this.dim.rows(),col);
         for (int i = 0; i < this.dim.rows(); i++) {
-            this.matrix[i][col-1] -= value;
+            this.matrix[i][col] -= value;
         }
     }
 
@@ -357,10 +418,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void multToCol(int col, int value) {
+    public void multToCol(int col, double value) {
         this.dim.check(this.dim.rows(),col);
         for (int i = 0; i < this.dim.rows(); i++) {
-            this.matrix[i][col-1] *= value;
+            this.matrix[i][col] *= value;
         }
     }
 
@@ -371,10 +432,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void divToCol(int col, int value) {
+    public void divToCol(int col, double value) {
         this.dim.check(this.dim.rows(),col);
         for (int i = 0; i < this.dim.rows(); i++) {
-            this.matrix[i][col-1] /= value;
+            this.matrix[i][col] /= value;
         }
     }
 
@@ -385,10 +446,10 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void modToCol(int col, int value) {
+    public void modToCol(int col, double value) {
         this.dim.check(this.dim.rows(),col);
         for (int i = 0; i < this.dim.rows(); i++) {
-            this.matrix[i][col-1] %= value;
+            this.matrix[i][col] %= value;
         }
     }
 
@@ -399,9 +460,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void add(int col, int row, int value) {
+    public void add(int col, int row, double value) {
         this.dim.check(col, row);
-        this.matrix[row-1][col-1] += value;
+        this.matrix[row][col] += value;
     }
 
     /**
@@ -411,9 +472,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void sub(int col, int row, int value) {
+    public void sub(int col, int row, double value) {
         this.dim.check(col, row);
-        this.matrix[row-1][col-1] -= value;
+        this.matrix[row][col] -= value;
     }
 
     /**
@@ -423,9 +484,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void mult(int col, int row, int value) {
+    public void mult(int col, int row, double value) {
         this.dim.check(col, row);
-        this.matrix[row-1][col-1] *= value;
+        this.matrix[row][col] *= value;
     }
 
     /**
@@ -435,9 +496,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void div(int col, int row, int value) {
+    public void div(int col, int row, double value) {
         this.dim.check(col, row);
-        this.matrix[row-1][col-1] /= value;
+        this.matrix[row][col] /= value;
     }
 
     /**
@@ -447,9 +508,9 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * @param value
      */
     @Override
-    public void mod(int col, int row, int value) {
+    public void mod(int col, int row, double value) {
         this.dim.check(col, row);
-        this.matrix[row-1][col-1] %= value;
+        this.matrix[row][col] %= value;
     }
 
     /**
@@ -461,6 +522,26 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
             System.out.println(Arrays.toString(this.matrix[i]));
             i++;
         }
+    }
+    
+    /**
+     * writes Matrix a way suitable fo
+     * @return
+     */
+    public String toFile() {
+    	StringBuilder a = new StringBuilder();
+    	int r = this.dim.rows();
+    	int c = this.dim.cols();
+    	 for (int i = 0; i < r; i++) {
+        	 for (int j = 0; j < c; j++) {
+        		 if(i < r-1 || j < c-1) { // damit man das Splitten splitten kann
+        			 a.append(this.matrix[i][j]+" ");
+        		 } else {
+        			 a.append(this.matrix[i][j]);
+        		 }
+        	}
+         }
+    	 return a.toString();
     }
 
     /**
@@ -481,7 +562,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
      * (For now only 0x0 up to 3x3 matrices and any triangular matrix)
      * @return
      */
-    public int det() throws NonQuadraticMatrixException {
+    public double det() throws NonQuadraticMatrixException {
         if (!isSquareMatrix()) throw new NonQuadraticMatrixException();
         if (dim.rows() == 0) return 0;
         if (dim.rows() == 1) return this.matrix[0][0];
@@ -494,7 +575,7 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
         }
         else {
             if (this.isTriangularMatrix()) {
-                int det = this.matrix[0][0];
+            	double det = this.matrix[0][0];
                 for (int i = 1; i < this.dim.rows(); i++) {
                     det *= this.matrix[i][i];
                 }
@@ -593,8 +674,15 @@ public class Matrix implements BasicMatrixArithmetic, Comparable<Matrix> {
 
     @Override
     public String toString() {
-        return "Matrix: " +
-                "dim=" + dim;
+    	StringBuilder a = new StringBuilder();
+    	for(int i = 0; i < matrix.length;i++) { //cols
+    		a.append("( ");
+    		for(int j = 0; j < matrix[i].length;j++) {//rows
+    			a.append(String.format(" %2.3f ",matrix[i][j]));
+    		}
+    		a.append(" )"+System.lineSeparator());
+    	}
+        return a.toString();
     }
 
     public int getColCount() {

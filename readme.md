@@ -1,11 +1,5 @@
-# Matrices (Java)
-A package of classes that empowers you to work with matrices.
+# Matrices_with_simple_Neuralnet
 
-## Feature-List
-- basic matrix (nxm dimension, set values, get values, add/sub/mult/div/mod values to specific cells or to all cells
-- transpose matrices
-- add/sub/div/mult/mod whole matrices
-- determinants of matrices (for now only 2x2 and 3x3)
-- special sub classes for vectors and identity matrices
-- dot product and cross product for vectors
-- and more...
+
+Most of the credit for this to Philip Schuster bib. I just changed int -> double, Matrices start with 0,0 instead of 1,1.
+Further more i added some helper functions for the NN.

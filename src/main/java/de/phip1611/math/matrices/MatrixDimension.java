@@ -1,16 +1,27 @@
-package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
  *   Web:     https://phip1611.de
  *   Twitter: https://twitter.com/phip1611
  *
- * This project on GitHub:
+ * other project version on GitHub:
  *   https://github.com/phip1611/Matrices-Java
  *
  * License: MIT-License
  *   https://github.com/phip1611/Matrices-Java/blob/master/LICENSE
  *
+ * 	Edited by Justin Horn 14.05.2019
+ * 
+ * 	Edited By Justin Horn
+ * 	Email:
+ *  ju-horn@web.de
+ *  Web:
+ *  https://justinhorn.name/
+ *  this version on GitHub:
+ *  https://github.com/Murtag00/Matrices_with_simple_Neuralnet
+ *  
+ *  int Arrays -> double
+ *  Matrixs .get starts with 0,0 instead of 1,1
  */
 
 /**
@@ -36,7 +47,7 @@ public class MatrixDimension implements Comparable<MatrixDimension> {
         if (i < 0 || j < 0) {
             throw new MatrixDimensionOutOfBoundsException("Can't access negative index of matrix.");
         }
-        if (i > this.i || j > this.j) {
+        if (i >= this.i || j >= this.j) {
             throw new MatrixDimensionOutOfBoundsException("Index out of matrix bounds!");
         }
     }

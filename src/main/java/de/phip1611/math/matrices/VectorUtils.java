@@ -1,16 +1,25 @@
-package de.phip1611.math.matrices;
 
 /*
  * AUTHOR: PHILIPP SCHUSTER
  *   Web:     https://phip1611.de
  *   Twitter: https://twitter.com/phip1611
  *
- * This project on GitHub:
+ * other project version on GitHub:
  *   https://github.com/phip1611/Matrices-Java
  *
  * License: MIT-License
  *   https://github.com/phip1611/Matrices-Java/blob/master/LICENSE
  *
+ * 
+ * 	Edited By Justin Horn
+ * 	Email:
+ *  ju-horn@web.de
+ *  Web:
+ *  https://justinhorn.name/
+ *  this version on GitHub:
+ *  https://github.com/Murtag00/Matrices_with_simple_Neuralnet
+ *  
+ *  
  */
 
 
@@ -28,7 +37,7 @@ public class VectorUtils {
      */
     public static int dotProduct(Vector v1, Vector v2) {
         int result = 0;
-        for (int i = 1; i <= v1.getRowCount(); i++) {
+        for (int i = 0; i < v1.getRowCount(); i++) {
             result += v1.get(i)*v2.get(i);
         }
         return result;
@@ -44,10 +53,10 @@ public class VectorUtils {
     public static Vector crossProduct(Vector v1, Vector v2) {
         if (v1.getRowCount() == 3 && 3 == v2.getRowCount()) {
             Vector product = new Vector(3);
-            int x1, x2, x3;
-            x1 = v1.get(2)*v2.get(3)-v1.get(3)*v2.get(2);
-            x2 = v1.get(3)*v2.get(1)-v1.get(1)*v2.get(3);
-            x3 = v1.get(1)*v2.get(2)-v1.get(2)*v2.get(1);
+            double x1, x2, x3;
+            x1 = v1.get(1)*v2.get(2)-v1.get(2)*v2.get(1);
+            x2 = v1.get(2)*v2.get(0)-v1.get(0)*v2.get(2);
+            x3 = v1.get(0)*v2.get(1)-v1.get(1)*v2.get(0);
             product.init(x1,x2,x3);
             return product;
         } else {
